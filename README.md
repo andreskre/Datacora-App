@@ -77,3 +77,7 @@ La app ya utiliza persistencia local en `server/db.json`, autenticacion JWT y au
 git clone https://github.com/Andreskre/Datacora-App.git
 cd Datacora-App
 npm install
+
+EXPO_PUBLIC_API_URL=http://TU_IP:4000
+PORT=4000
+JWT_SECRET=datacora-local-secret-2026
