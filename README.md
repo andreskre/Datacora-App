@@ -73,3 +73,7 @@ Notas de entorno:
 ## Nota tecnica
 
 La app ya utiliza persistencia local en `server/db.json`, autenticacion JWT y autorizacion por rol en endpoints.
+
+git clone https://github.com/Andreskre/Datacora-App.git
+cd Datacora-App
+npm install
