@@ -1,0 +1,69 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Camila Soto",
+      "email": "tecnico@datacora.cl",
+      "password": "Datacora123",
+      "role": "tecnico"
+    },
+    {
+      "id": "u2",
+      "name": "Marco Rojas",
+      "email": "jefe@datacora.cl",
+      "password": "Datacora123",
+      "role": "jefe_mantencion"
+    },
+    {
+      "id": "u3",
+      "name": "Ana Paredes",
+      "email": "nacional@datacora.cl",
+      "password": "Datacora123",
+      "role": "jefe_nacional"
+    },
+    {
+      "id": "u4",
+      "name": "Admin Datacora",
+      "email": "admin@datacora.cl",
+      "password": "Datacora123",
+      "role": "admin"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "a1",
+      "rbd": "10234-5",
+      "establishmentName": "Escuela Las Araucarias",
+      "establishmentType": "JUNAEB",
+      "assignedTo": "u1",
+      "assignedBy": "u2",
+      "status": "pendiente"
+    },
+    {
+      "id": "a2",
+      "rbd": "66771-9",
+      "establishmentName": "Jardin Arcoiris",
+      "establishmentType": "JUNJI",
+      "assignedTo": "u1",
+      "assignedBy": "u2",
+      "status": "pendiente"
+    }
+  ],
+  "questions": {
+    "JUNAEB": [
+      "Se verifico el estado del sistema electrico?",
+      "Se inspeccionaron filtraciones o humedad?",
+      "El equipamiento critico opera correctamente?"
+    ],
+    "JUNJI": [
+      "Las salidas de emergencia estan despejadas?",
+      "Existe senaletica visible en areas comunes?",
+      "El sistema de agua caliente funciona correctamente?"
+    ],
+    "INTEGRA": [
+      "Se reviso el sistema de climatizacion?",
+      "El area de cocina cumple condiciones operativas?",
+      "Se detectaron observaciones de seguridad?"
+    ]
+  }
+}
