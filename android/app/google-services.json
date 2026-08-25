@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916956517837",
+    "project_id": "datacora-soser",
+    "storage_bucket": "datacora-soser.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916956517837:android:35436600d1ba3e86746084",
+        "android_client_info": {
+          "package_name": "cl.soser.datacora"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA258QrCzarVpy-E0BL0H3uEhTIm4v4Log"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

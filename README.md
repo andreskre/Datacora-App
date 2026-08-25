@@ -1,83 +1,78 @@
-# Datacora
+# Datácora
 
-Aplicacion movil multiplataforma (iOS y Android) para digitalizacion de bitacoras de mantenimiento por establecimiento.
+Primera versión funcional de interfaz móvil para digitalizar bitácoras de mantenimiento en terreno.
 
-## Stack
+## Cómo abrir
 
-- Expo + React Native + TypeScript
-- React Navigation (stack + tabs)
-- Context API para sesion y asignaciones
-- API REST con JWT y control de roles
-- Montserrat como tipografia principal
+Abrir `index.html` en el navegador. La interfaz está construida sin dependencias externas para que funcione como prototipo local.
 
-## Roles incluidos
+## Estructura
 
-- tecnico
-- jefe_mantencion
-- jefe_nacional
-- admin
+- `index.html`: entrada principal de la app.
+- `manifest.webmanifest`: base PWA para instalación futura en Android.
+- `src/app.js`: navegación, componentes reutilizables y renderizado de pantallas.
+- `src/data.js`: datos simulados, tareas, historial, usuario y estructuras base de formularios dinámicos.
+- `src/styles.css`: diseño mobile-first, paleta, estados visuales y layout.
+- `src/assets/logo.svg`: ícono de Datácora.
 
-## Flujo implementado
+## Base para formularios dinámicos
 
-1. Login con validaciones y manejo de error.
-2. Jefe de mantencion asigna visitas a tecnicos por RBD.
-3. Tecnico visualiza sus asignaciones y completa formulario en terreno.
-4. Formularios diferenciados por tipo de establecimiento:
-   - JUNAEB
-   - JUNJI
-   - INTEGRA
-5. Jefe nacional revisa metricas globales.
-6. Admin visualiza control basico de usuarios por rol.
+Cada tarea incluye:
 
-## Credenciales demo
+- `form.blueprintKey`: conecta la tarea con una plantilla de formulario.
 
-- tecnico@datacora.cl / Datacora123
-- jefe@datacora.cl / Datacora123
-- nacional@datacora.cl / Datacora123
-- admin@datacora.cl / Datacora123
+Las plantillas en `formBlueprints` declaran tipos de respuesta soportados:
 
-## Scripts
+- Texto.
+- Alternativas simples o múltiples.
+- Observaciones.
+- Fotografías.
+- Archivos adjuntos.
 
-- `npm run start`
-- `npm run android`
-- `npm run ios`
-- `npm run web`
-- `npm run api:start`
+Las preguntas definitivas no están implementadas todavía.
 
-## Conexion API real
+## Usuarios
 
-La app ahora consume una API REST local con persistencia en `server/db.json`.
+`src/data.js` incluye una tabla mock de usuarios con:
 
-1. Inicie la API:
-  - `npm run api:start`
-2. Configure variables en `.env` (raiz del proyecto):
-  - `EXPO_PUBLIC_API_URL=http://localhost:4000`
-  - `JWT_SECRET=defina_un_secreto_seguro`
+- `id`
+- `nombre`
+- `usuario`
+- `sucursal`
+- `grupo`
+- `cargo`
+- `estado`
+- `motivoEstado`
+- `permisos`
 
-Notas de entorno:
+Usuario administrador de prototipo:
 
-- Android Emulator: use `http://10.0.2.2:4000`
-- iOS Simulator: use `http://localhost:4000`
-- Dispositivo fisico: use `http://IP_DE_SU_PC:4000`
+- Usuario: `patricio.tapia@soser.cl`
+- Contraseña: `Neo.0109`
 
-## Branding
+El administrador puede cambiar estados entre activo e inactivo por disponibilidad, ausencia, licencia o despido desde el menu Usuarios.
 
-- Paleta aplicada:
-  - #00162A
-  - #00B4D8
-  - #22C55E
-  - #E6EDF3
-- Tipografia: Montserrat
-- Logo: `assets/Logo1.png`
+El administrador tiene un flujo propio con solo dos accesos inferiores:
 
-## Nota tecnica
+- `Acciones`
+- `Perfil`
 
-La app ya utiliza persistencia local en `server/db.json`, autenticacion JWT y autorizacion por rol en endpoints.
+Desde `Acciones` puede entrar a:
 
-git clone https://github.com/Andreskre/Datacora-App.git
-cd Datacora-App
-npm install
+- Usuarios.
+- Grupos.
+- Asignar tareas a tecnicos activos.
 
-EXPO_PUBLIC_API_URL=http://TU_IP:4000
-PORT=4000
-JWT_SECRET=datacora-local-secret-2026
+## Politica de contrasenas
+
+Las contrasenas nuevas deben cumplir:
+
+- Minimo 8 caracteres.
+- Al menos una mayuscula.
+- Al menos una minuscula.
+- Al menos un numero.
+- Al menos un caracter especial.
+
+Cuando un administrador crea un usuario, la app genera una contrasena temporal de un solo uso y marca `requirePasswordChange: true`. En el primer ingreso, el usuario debe definir una nueva contrasena antes de acceder a las tareas.
+
+Nota: la contraseña está en texto plano solo porque esta versión es un prototipo local sin backend. En producción debe reemplazarse por autenticación segura y hash de contraseñas.

@@ -1,0 +1,21 @@
+{
+  "appId": "cl.soser.datacora",
+  "appName": "Datácora",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "LiveUpdates": {
+      "enabled": true,
+      "appId": "15ee612e",
+      "channel": "Production",
+      "autoUpdateMethod": "background",
+      "maxVersions": 2
+    }
+  }
+}

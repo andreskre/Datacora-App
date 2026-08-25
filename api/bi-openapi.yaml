@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Datacora BI API
+  version: 0.1.0
+  description: API de lectura para extraer bitácoras y respuestas no binarias hacia Power BI u otros sistemas BI.
+servers:
+  - url: https://{project-ref}.supabase.co/rest/v1
+    variables:
+      project-ref:
+        default: your-project-ref
+security:
+  - bearerAuth: []
+paths:
+  /bi_bitacoras_resumen:
+    get:
+      summary: Lista resumen de bitácoras
+      description: Retorna una fila por bitácora, con conteos de respuestas, PDF final y firmas.
+      parameters:
+        - $ref: "#/components/parameters/Select"
+        - name: branch_name
+          in: query
+          schema:
+            type: string
+          example: eq.Talca
+        - name: rbd
+          in: query
+          schema:
+            type: string
+          example: eq.2730
+        - name: submitted_at
+          in: query
+          schema:
+            type: string
+          example: gte.2026-07-01
+      responses:
+        "200":
+          description: Resumen de bitácoras
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BitacoraResumen"
+  /bi_bitacora_respuestas:
+    get:
+      summary: Respuestas de bitácoras sin fotos
+      description: Retorna una fila por respuesta textual, numérica, fecha, booleana o JSON. Excluye fotos, adjuntos y firmas.
+      parameters:
+        - $ref: "#/components/parameters/Select"
+        - name: branch_name
+          in: query
+          schema:
+            type: string
+          example: eq.Talca
+        - name: rbd
+          in: query
+          schema:
+            type: string
+          example: eq.2730
+        - name: submitted_at
+          in: query
+          schema:
+            type: string
+          example: gte.2026-07-01
+        - name: section_code
+          in: query
+          schema:
+            type: string
+          example: eq.heat
+      responses:
+        "200":
+          description: Respuestas planas para BI
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BitacoraRespuesta"
+  /rpc/get_bi_bitacora_respuestas:
+    post:
+      summary: Respuestas BI con filtros estructurados
+      description: Alternativa RPC para Power BI cuando se prefieren parámetros JSON.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                p_from:
+                  type: string
+                  format: date
+                  nullable: true
+                p_to:
+                  type: string
+                  format: date
+                  nullable: true
+                p_branch:
+                  type: string
+                  nullable: true
+                p_rbd:
+                  type: string
+                  nullable: true
+            example:
+              p_from: "2026-07-01"
+              p_to: "2026-07-31"
+              p_branch: Talca
+              p_rbd: null
+      responses:
+        "200":
+          description: Respuestas filtradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BitacoraRespuesta"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Select:
+      name: select
+      in: query
+      schema:
+        type: string
+      example: "*"
+      description: Parámetro estándar de PostgREST/Supabase para seleccionar columnas.
+  schemas:
+    BitacoraResumen:
+      type: object
+      properties:
+        submission_id:
+          type: string
+          format: uuid
+        task_id:
+          type: string
+          format: uuid
+        task_type:
+          type: string
+        task_status:
+          type: string
+        priority:
+          type: string
+        rbd:
+          type: string
+        establishment_name:
+          type: string
+        branch_name:
+          type: string
+        technician_name:
+          type: string
+        assigned_by_name:
+          type: string
+        assigned_at:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date
+        started_at:
+          type: string
+          format: date-time
+        submitted_at:
+          type: string
+          format: date-time
+        pdf_url:
+          type: string
+          nullable: true
+        pdf_external_id:
+          type: string
+          nullable: true
+        pdf_file_name:
+          type: string
+          nullable: true
+        answer_count:
+          type: integer
+        pdf_count:
+          type: integer
+        signature_count:
+          type: integer
+    BitacoraRespuesta:
+      type: object
+      properties:
+        submission_id:
+          type: string
+          format: uuid
+        task_id:
+          type: string
+          format: uuid
+        task_type:
+          type: string
+        task_status:
+          type: string
+        priority:
+          type: string
+        assigned_at:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date
+        started_at:
+          type: string
+          format: date-time
+        submitted_at:
+          type: string
+          format: date-time
+        rbd:
+          type: string
+        establishment_name:
+          type: string
+        commune:
+          type: string
+        institution_type:
+          type: string
+        address:
+          type: string
+        branch_name:
+          type: string
+        technician_name:
+          type: string
+        technician_email:
+          type: string
+        assigned_by_name:
+          type: string
+        form_name:
+          type: string
+        form_version:
+          type: integer
+        section_code:
+          type: string
+        section_title:
+          type: string
+        item_index:
+          type: integer
+          nullable: true
+        item_label:
+          type: string
+          nullable: true
+        question_code:
+          type: string
+        question_label:
+          type: string
+        answer_type:
+          type: string
+        answer_value:
+          type: string
+          nullable: true
+        answer_json:
+          type: object
+        answered_at:
+          type: string
+          format: date-time
