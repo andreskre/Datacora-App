@@ -53,8 +53,7 @@ android/build/
 *.p12
 *.pem
 
-# Contenido web generado por prepare-android.ps1
-www/
+
 
 # Builds y artefactos auxiliares
 build/
